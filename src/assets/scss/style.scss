@@ -1,7 +1,24 @@
+@import 'variables';
 @import 'reset';
+@import 'mixins';
 
-$red: #F00;
 
-:root {
-  --yellow: #FF0;
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  position: relative;
+  width: 100%;
+  min-height: 110vh;
+  overflow-x: hidden;
+}
+
+.btn {
+  @include btn;
+}
+.btn-circle {
+  @include btn;
+  @include btn-active;
+  border-radius: 50%;
 }

@@ -1,0 +1,45 @@
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin btn {
+  all: unset;
+  box-sizing: border-box;
+  @include flex-center;
+  position: relative;
+  width: var(--header-btn-size);
+  height: var(--header-btn-size);
+  cursor: pointer;
+  .icon {
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+}
+
+@mixin btn-active {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(transparent 67%, #999 68%);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity .5s, transform .5s;
+  }
+  &:active {
+    background: var(--btn-active-bg);
+  }
+  &:active::before {
+    background-image: radial-gradient(transparent 67%, var(--btn-active-bg) 68%);
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0s, transform 0s;
+  }
+}

@@ -1,0 +1,28 @@
+:root {
+  --header-btn-size: 40px;
+}
+
+body {
+  --header-bg: #FFF;
+  --header-icon-nation: #7B7B7B;
+  --header-searchbar-bg: transparent;
+  --header-searchbar-border: #CCC;
+  --header-searchbar-btn-bg: #F8F8F8;
+  --header-searchbar-btn-border: #CCC;
+  --header-searchbar-record-bg: #F9F9F9;
+  --header-searchbar-text: #000;
+  --btn-active-bg: #E5E5E5;
+}
+
+body.darkmode {
+  --header-bg: #202020;
+  --header-icon-nation: #9C9C9C;
+  --header-searchbar-bg: #121212;
+  --header-searchbar-border: #303030;
+  --header-searchbar-btn-bg: #313131;
+  --header-searchbar-btn-border: transparent;
+  --header-searchbar-record-bg: #181818;
+  --header-searchbar-text: #FFF;
+  --btn-active-bg: #373737;
+  --btn-active-border: #373737;
+}

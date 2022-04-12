@@ -1,5 +1,6 @@
 <template>
   <Header />
+  <!-- <img src="./assets/image/color.png" alt="" style="padding-top: 100px"> -->
   <router-view/>
 </template>
 
@@ -7,7 +8,10 @@
 import Header from './components/Header.vue'
 
 export default {
-  components: { Header }
+  components: { Header },
+  setup(){
+
+  }
 }
 </script>
 

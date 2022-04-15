@@ -1,44 +1,42 @@
 <template>
   <header class="header" :class="{ 'search-mode': isSearchBarExpanded }">
     <div class="left">
-      <button type="button" class="btn-circle menu">
+      <button type="button" class="btn-circle menu" id="toggleSidebar" @click="switchSidebar">
         <img :src="require(`../assets/image/svg/menu-${$store.state.darkMode}.svg`)" alt="menu icon" class="icon">
       </button>
-      <a href="#" class="logo">
-        <img :src="require(`../assets/image/svg/youtube-${$store.state.darkMode}.svg`)" alt="youtube logo" class="icon">
-      </a>
+      <Logo />
     </div>
     <div class="center">
       <button type="button" class="exit-search-mode-btn btn-circle" @click="isSearchBarExpanded = false">
-        <img :src="require(`../assets/image/svg/arrow-left-${$store.state.darkMode}.svg`)" alt="" class="icon">
+        <img :src="require(`../assets/image/svg/arrow-left-${$store.state.darkMode}.svg`)" alt="return" class="icon">
       </button>
       <form class="search">
-        <div class="search-box" :class="{ 'active': isSearching }">
+        <div class="search-box" :class="{ 'enabled': isSearching }">
           <div class="search-icon btn">
-            <img :src="require(`../assets/image/svg/search-${$store.state.darkMode}.svg`)" alt="" class="icon">
+            <img :src="require(`../assets/image/svg/search-${$store.state.darkMode}.svg`)" alt="search icon" class="icon">
           </div>
           <input type="text" placeholder="搜尋" class="search-bar" @focus="isSearching = true" @blur="isSearching = false" v-model="searchText" ref="searchBar" spellcheck="false">
           <div class="search-clear btn-circle" v-show="searchText" @click="clearSearch">
-            <img :src="require(`../assets/image/svg/close-${$store.state.darkMode}.svg`)" alt="" class="icon">
+            <img :src="require(`../assets/image/svg/close-${$store.state.darkMode}.svg`)" alt="clear search" class="icon">
           </div>
         </div>
         <button type="submit" class="search-btn btn">
-          <img :src="require(`../assets/image/svg/search-${$store.state.darkMode}.svg`)" alt="" class="icon">
+          <img :src="require(`../assets/image/svg/search-${$store.state.darkMode}.svg`)" alt="search bar submit" class="icon">
         </button>
       </form>
       <button type="button" class="call-search-btn btn-circle" @click="isSearchBarExpanded = true">
-        <img :src="require(`../assets/image/svg/search-${$store.state.darkMode}.svg`)" alt="" class="icon">
+        <img :src="require(`../assets/image/svg/search-${$store.state.darkMode}.svg`)" alt="search" class="icon">
       </button>
       <button type="button" class="record btn-circle">
-        <img :src="require(`../assets/image/svg/record-${$store.state.darkMode}.svg`)" alt="" class="icon">
+        <img :src="require(`../assets/image/svg/record-${$store.state.darkMode}.svg`)" alt="record" class="icon">
       </button>
     </div>
     <div class="right">
       <button type="button" class="btn-circle">
-        <img :src="require(`../assets/image/svg/upload-${$store.state.darkMode}.svg`)" alt="" class="icon">
+        <img :src="require(`../assets/image/svg/upload-${$store.state.darkMode}.svg`)" alt="upload" class="icon">
       </button>
       <button type="button" class="btn-circle">
-        <img :src="require(`../assets/image/svg/apps-${$store.state.darkMode}.svg`)" alt="" class="icon">
+        <img :src="require(`../assets/image/svg/apps-${$store.state.darkMode}.svg`)" alt="apps" class="icon">
       </button>
       <button type="button" class="btn-circle toggle-dark" @click="toggleDarkMode">
         <svg viewBox="0 0 24 24" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="icon">
@@ -55,12 +53,13 @@
 </template>
 
 <script>
+import Logo from './Logo.vue'
 import { ref } from 'vue'
 import store from '../store'
 
 export default {
+  components: { Logo },
   setup(){
-    let mode = ref('l')
     const isSearching = ref(false)
     const isSearchBarExpanded = ref(false)
     const searchText = ref('')
@@ -71,13 +70,115 @@ export default {
       searchBar.value.focus()
     }
 
-    window.addEventListener('resize', e => {
-      if (window.innerWidth > 670){
+    // switch sidebar
+    // sidebar mode
+    //    L:        ~ 1331px; default wide (in flow), can switch to narrow (in flow)
+    //    M:  1330px ~ 801px; default narrow (in flow), can call wide (modal mode)
+    //    S:   880px ~ 501px; default close, can call wide (modal mode)
+    let prevScreenWidth = null
+    window.addEventListener('resize', () => {
+      let currentScreenWidth = window.innerWidth
+
+      // searchbar
+      // if searchbar is expanded in narrow screen, then close it if screen resize > 670
+      if (currentScreenWidth > 670){
         isSearchBarExpanded.value = false
       }
-    })
 
-    // dark mode
+      // sidebar
+      // when screen width passes threshold, clear designatedSidebarMode in store
+      const threshold_LtoM = prevScreenWidth && prevScreenWidth > 1330 && currentScreenWidth <= 1330
+      const threshold_MtoL = prevScreenWidth && prevScreenWidth <= 1330 && currentScreenWidth > 1330
+      if (threshold_LtoM || threshold_MtoL){
+        store.commit('clearSidebarMode')
+      }
+      // when screen width < 1330, add transition to wide sidebar
+      if (threshold_LtoM){
+        document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform 0s')
+      }
+      // update prevScreenWidth
+      prevScreenWidth = currentScreenWidth
+      // switch to different sidebar mode according to screen width; skip this step if user has designate a specific mode
+      if (currentScreenWidth <= 1330 && store.state.designatedSidebarMode) return
+      if (currentScreenWidth <= 1330){
+        showNarrowHideWide()
+      }
+      if (currentScreenWidth > 1330 && store.state.designatedSidebarMode) return
+      if (currentScreenWidth > 1330){
+        showWideHideNarrow()
+      }
+    })
+    const showWideHideNarrow = () => {
+      let wideSidebarWidth = getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-width`).trim()
+      let narrowSidebarWidth = getComputedStyle(document.documentElement).getPropertyValue(`--narrow-sidebar-width`).trim()
+
+      document.documentElement.style.setProperty('--wide-sidebar-display', 'block')
+      document.documentElement.style.setProperty('--wide-sidebar-transform-left', 0)
+
+      if (window.innerWidth > 1330){
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
+        document.documentElement.style.setProperty('--sidebar-width', wideSidebarWidth)
+        document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '100%')
+      } else if (window.innerWidth > 800) {
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'block')
+        document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
+        document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '0')
+        document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform .2s')
+      } else if (window.innerWidth > 500) {
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
+        document.documentElement.style.setProperty('--sidebar-width', 0)
+        document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '0')
+        document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform .2s')
+      }
+    }
+    const showNarrowHideWide = () => {
+      let wideSidebarWidth = getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-width`).trim()
+      let narrowSidebarWidth = getComputedStyle(document.documentElement).getPropertyValue(`--narrow-sidebar-width`).trim()
+
+      document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '100%')
+
+      if (window.innerWidth > 1330){
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'block')
+        document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
+        document.documentElement.style.setProperty('--wide-sidebar-display', 'none')
+        document.documentElement.style.setProperty('--wide-sidebar-transform-left', 0)
+      } else if (window.innerWidth > 850) {
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'block')
+        document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
+        document.documentElement.style.setProperty('--wide-sidebar-display', 'block')
+        document.documentElement.style.setProperty('--wide-sidebar-transform-left', wideSidebarWidth)
+      } else if (window.innerWidth > 500) {
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
+        document.documentElement.style.setProperty('--sidebar-width', 0)
+        document.documentElement.style.setProperty('--wide-sidebar-display', 'block')
+        document.documentElement.style.setProperty('--wide-sidebar-transform-left', wideSidebarWidth)
+      }
+    }
+    const switchSidebar = () => {
+      let wideSidebarDisplay = getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-display`).trim()
+      let wideSidebarTransformLeft = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-transform-left`).trim())
+      console.log(wideSidebarDisplay, wideSidebarTransformLeft);
+
+      if (window.innerWidth > 1330){
+        if (wideSidebarDisplay === 'block'){
+          showNarrowHideWide()
+          store.commit('setNarrowSidebarMode')
+        } else {
+          showWideHideNarrow()
+          store.commit('setWideSidebarMode')
+        }
+      } else if (window.innerWidth > 500){
+        if (wideSidebarTransformLeft === 0){
+          showNarrowHideWide()
+          store.commit('setNarrowSidebarMode')
+        } else {
+          showWideHideNarrow()
+          store.commit('setWideSidebarMode')
+        }
+      }
+    }
+
+    // switch light/dark mode
     let darkMode = localStorage.getItem('darkMode')
     const enableDarkMode = () => {
       document.body.classList.add('darkmode')
@@ -94,7 +195,6 @@ export default {
     }
     const toggleDarkMode = () => {
       darkMode = localStorage.getItem('darkMode')
-      console.log(darkMode);
       if (darkMode === 'enabled'){
         disableDarkMode()
       } else {
@@ -104,7 +204,8 @@ export default {
 
     return {
       isSearching, isSearchBarExpanded, searchText, searchBar, clearSearch,
-      toggleDarkMode
+      toggleDarkMode,
+      switchSidebar
     }
   }
 }
@@ -113,13 +214,15 @@ export default {
 <style scoped lang="scss">
 .header {
   position: fixed;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 56px;
+  height: var(--header-height);
   padding: 0 16px;
   background: var(--header-bg);
+  z-index: var(--header-z-index);
   @media (max-width: 670px) {
     padding: 0 8px;
   }
@@ -160,34 +263,6 @@ export default {
     display: none;
   }
 }
-.logo {
-  position: relative;
-  @include flex-center;
-  width: 120px;
-  height: 100%;
-  margin: auto 0;
-  color: var(--header-icon-nation);
-  .icon {
-    width: 90px;
-    height: 20px;
-    pointer-events: none;
-  }
-  &::after {
-    content: 'tw';
-    display: block;
-    position: absolute;
-    top: 12px;
-    right: -7px;
-    text-transform: uppercase;
-    font-size: 12px;
-    @media (max-width: 500px) {
-      display: none;
-    }
-  }
-  &:active {
-    color: var(--header-icon-nation);
-  }
-}
 
 // center
 .center {
@@ -202,8 +277,8 @@ export default {
   @include flex-center;
   max-width: 632px;
   width: 100%;
-  height: var(--header-btn-size);
-  margin-left: var(--header-btn-size);
+  height: var(--btn-size);
+  margin-left: var(--btn-size);
   @media (max-width: 670px) {
     width: 0;
     margin-left: 0;
@@ -216,7 +291,7 @@ export default {
   max-width: 572px;
   width: 100%;
   height: 100%;
-  &.active {
+  &.enabled {
     outline: 1px solid #36C;
     outline-offset: -1px;
     .search-icon {
@@ -239,6 +314,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  width: var(--btn-size);
+  height: var(--btn-size);
   background: transparent;
   border: 1px solid transparent;
   opacity: 0;
@@ -255,7 +332,7 @@ export default {
   flex: 1;
   width: 100%;
   height: 100%;
-  margin-left: var(--header-btn-size);
+  margin-left: var(--btn-size);
   padding: 0 5px;
   background: var(--header-searchbar-bg);
   color: var(--header-searchbar-text);
@@ -299,7 +376,7 @@ export default {
   margin-right: 8px;
 }
 .record {
-  flex: 0 0 var(--header-btn-size);
+  flex: 0 0 var(--btn-size);
   margin-left: 8px;
   background: var(--header-searchbar-record-bg);
   @media (max-width: 670px) {
@@ -333,12 +410,14 @@ export default {
 .avatar {
   all: unset;
   @include flex-center;
-  width: 60px;
-  height: var(--header-btn-size);
+  width: var(--btn-size);
+  height: var(--btn-size);
+  padding: 0 10px;
   border-radius: 50%;
   overflow: hidden;
   .img {
     border-radius: 50%;
+    cursor: pointer;
   }
 }
 </style>

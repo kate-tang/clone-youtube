@@ -2,7 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    darkMode: 'l'
+    darkMode: 'l',
+    designatedSidebarMode: null,
   },
   getters: {
   },
@@ -12,7 +13,16 @@ export default createStore({
     },
     disableDarkMode(state){
       state.darkMode = 'l'
-    }
+    },
+    setWideSidebarMode(state){
+      state.designatedSidebarMode = 'wide'
+    },
+    setNarrowSidebarMode(state){
+      state.designatedSidebarMode = 'narrow'
+    },
+    clearSidebarMode(state){
+      state.designatedSidebarMode = null
+    },
   },
   actions: {
   },

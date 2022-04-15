@@ -20,5 +20,73 @@ html, body {
 .btn-circle {
   @include btn;
   @include btn-active;
+  &::before {
+    border-radius: 50%;
+  }
+  width: var(--btn-size);
+  height: var(--btn-size);
   border-radius: 50%;
+}
+.btn-square {
+  @include btn;
+  @include btn-active;
+  flex-direction: column;
+  width: var(--narrow-sidebar-width);
+  height: calc(var(--narrow-sidebar-width) + 2px);
+  color: var(--narrow-sidebar-text);
+  font-size: 12px;
+  &.enabled {
+    background: var(--narrow-sidebar-btn-enabled-bg);
+  }
+  &:hover {
+    background: var(--sidebar-btn-hover-bg);
+  }
+  &:active {
+    background: var(--narrow-sidebar-btn-active-bg);
+  }
+  .icon {
+    margin-bottom: 6px;
+  }
+}
+.btn-rectangle {
+  @include btn;
+  @include btn-active;
+  justify-content: flex-start;
+  @include flex-center;
+  width: var(--wide-sidebar-width);
+  height: var(--btn-size);
+  padding: 0 var(--btn-icon-size);
+  color: var(--narrow-sidebar-text);
+  font-size: 14px;
+  &.enabled {
+    background: var(--wide-sidebar-btn-enabled-bg);
+    &:hover {
+      background: var(--wide-sidebar-btn-enabled-bg-and-hover-bg);
+    }
+    &:active {
+      background: var(--wide-sidebar-btn-enabled-bg-and-active-bg);
+    }
+  }
+  &:hover {
+    background: var(--sidebar-btn-hover-bg);
+  }
+  &:active {
+    background: var(--wide-sidebar-btn-active-bg);
+  }
+  .icon {
+    flex: 0 0 var(--btn-icon-size);
+    margin-right: var(--btn-icon-size);
+  }
+  .text {
+    flex: 1;
+    padding-right: 5px;
+    line-height: 1.2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.bold {
+  font-weight: 600;
 }

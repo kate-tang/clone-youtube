@@ -1,10 +1,40 @@
 :root {
-  --header-btn-size: 40px;
+  --btn-size: 40px;
+  --btn-icon-size: 24px;
+  --header-height: 56px;
+
+  --narrow-sidebar-width: 72px;
+  --wide-sidebar-width: 240px;
+  --sidebar-width: var(--wide-sidebar-width);
+
+  --wide-sidebar-display: block;
+  --narrow-sidebar-display: none;
+
+  --header-z-index: 5;
+  --wide-sidebar-z-index: var(--header-z-index) - 1;
+  --wide-sidebar-transform-left: 0;
+  --wide-sidebar-backdrop-position-right: 100%;
+  --wide-sidebar-transition: transform 0s;
+  
+  @media (max-width: 1330px) {
+    --sidebar-width: var(--narrow-sidebar-width);
+
+    --narrow-sidebar-display: block;
+
+    --wide-sidebar-z-index: var(--header-z-index);
+    --wide-sidebar-transform-left: var(--wide-sidebar-width);
+    --wide-sidebar-transition: transform .2s;
+  }
+  @media (max-width: 800px) {
+    --sidebar-width: 0;
+
+    --narrow-sidebar-display: none;
+  }
 }
 
 body {
   --header-bg: #FFF;
-  --header-icon-nation: #7B7B7B;
+  --header-icon-nation-text: #7B7B7B;
   --header-searchbar-bg: transparent;
   --header-searchbar-border: #CCC;
   --header-searchbar-btn-bg: #F8F8F8;
@@ -12,11 +42,24 @@ body {
   --header-searchbar-record-bg: #F9F9F9;
   --header-searchbar-text: #000;
   --btn-active-bg: #E5E5E5;
+
+  --sidebar-bg: #FFF;
+  --sidebar-btn-hover-bg: #F2F2F2;
+  --narrow-sidebar-text: #000;
+  --narrow-sidebar-btn-enabled-bg: transparent;
+  --narrow-sidebar-btn-active-bg: #DADADA;
+  --wide-sidebar-border: #E5E5E5;
+  --wide-sidebar-text: #606060;
+  --wide-sidebar-copyright-text: #909090;
+  --wide-sidebar-btn-enabled-bg: #E5E5E5;
+  --wide-sidebar-btn-active-bg: #C1C1C1;
+  --wide-sidebar-btn-enabled-bg-and-hover-bg: #D9D9D9;
+  --wide-sidebar-btn-enabled-bg-and-active-bg: #ACACAC;
 }
 
 body.darkmode {
   --header-bg: #202020;
-  --header-icon-nation: #9C9C9C;
+  --header-icon-nation-text: #9C9C9C;
   --header-searchbar-bg: #121212;
   --header-searchbar-border: #303030;
   --header-searchbar-btn-bg: #313131;
@@ -25,4 +68,17 @@ body.darkmode {
   --header-searchbar-text: #FFF;
   --btn-active-bg: #373737;
   --btn-active-border: #373737;
+
+  --sidebar-bg: #212121;
+  --sidebar-btn-hover-bg: #383838;
+  --narrow-sidebar-text: #FFF;
+  --narrow-sidebar-btn-enabled-bg: transparent;
+  --narrow-sidebar-btn-active-bg: #4C4C4C;
+  --wide-sidebar-border: #383838;
+  --wide-sidebar-text: #AAA;
+  --wide-sidebar-copyright-text: #717171;
+  --wide-sidebar-btn-enabled-bg: #383838;
+  --wide-sidebar-btn-active-bg: #606060;
+  --wide-sidebar-btn-enabled-bg-and-hover-bg: #4C4C4C;
+  --wide-sidebar-btn-enabled-bg-and-active-bg: #707070;
 }

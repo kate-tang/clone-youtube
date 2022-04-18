@@ -2,6 +2,7 @@
   --btn-size: 40px;
   --btn-icon-size: 24px;
   --header-height: 56px;
+  --header-z-index: 5;
 
   --narrow-sidebar-width: 72px;
   --wide-sidebar-width: 240px;
@@ -10,11 +11,16 @@
   --wide-sidebar-display: block;
   --narrow-sidebar-display: none;
 
-  --header-z-index: 5;
   --wide-sidebar-z-index: var(--header-z-index) - 1;
   --wide-sidebar-transform-left: 0;
   --wide-sidebar-backdrop-position-right: 100%;
   --wide-sidebar-transition: transform 0s;
+
+  --topicbar-left-offset: var(--wide-sidebar-width);
+  --topicbar-height: var(--header-height);
+  --btn-pill-height: 32px;
+  --topicbar-display: flex;
+  --topicbar-position: 'static';
   
   @media (max-width: 1330px) {
     --sidebar-width: var(--narrow-sidebar-width);
@@ -24,15 +30,21 @@
     --wide-sidebar-z-index: var(--header-z-index);
     --wide-sidebar-transform-left: var(--wide-sidebar-width);
     --wide-sidebar-transition: transform .2s;
+
+    --topicbar-left-offset: var(--narrow-sidebar-width);
   }
   @media (max-width: 800px) {
     --sidebar-width: 0;
 
     --narrow-sidebar-display: none;
+
+    --topicbar-left-offset: 0px;
   }
 }
 
 body {
+  --text: #000;
+
   --header-bg: #FFF;
   --header-icon-nation-text: #7B7B7B;
   --header-searchbar-bg: transparent;
@@ -45,7 +57,6 @@ body {
 
   --sidebar-bg: #FFF;
   --sidebar-btn-hover-bg: #F2F2F2;
-  --narrow-sidebar-text: #000;
   --narrow-sidebar-btn-enabled-bg: transparent;
   --narrow-sidebar-btn-active-bg: #DADADA;
   --wide-sidebar-border: #E5E5E5;
@@ -55,9 +66,17 @@ body {
   --wide-sidebar-btn-active-bg: #C1C1C1;
   --wide-sidebar-btn-enabled-bg-and-hover-bg: #D9D9D9;
   --wide-sidebar-btn-enabled-bg-and-active-bg: #ACACAC;
+
+  --topicbar-bg: var(--header-bg);
+  --topicbar-border: #E5E5E5;
+  --btn-pill-bg: #F2F2F2;
+  --btn-pill-enabled-bg: #030303;
+  --btn-pill-enabled-text: #FFF;
 }
 
 body.darkmode {
+  --text: #FFF;
+
   --header-bg: #202020;
   --header-icon-nation-text: #9C9C9C;
   --header-searchbar-bg: #121212;
@@ -71,7 +90,6 @@ body.darkmode {
 
   --sidebar-bg: #212121;
   --sidebar-btn-hover-bg: #383838;
-  --narrow-sidebar-text: #FFF;
   --narrow-sidebar-btn-enabled-bg: transparent;
   --narrow-sidebar-btn-active-bg: #4C4C4C;
   --wide-sidebar-border: #383838;
@@ -81,4 +99,10 @@ body.darkmode {
   --wide-sidebar-btn-active-bg: #606060;
   --wide-sidebar-btn-enabled-bg-and-hover-bg: #4C4C4C;
   --wide-sidebar-btn-enabled-bg-and-active-bg: #707070;
+
+  --topicbar-bg: var(--header-bg);
+  --topicbar-border: #373737;
+  --btn-pill-bg: #373737;
+  --btn-pill-enabled-bg: #FFF;
+  --btn-pill-enabled-text: #000;
 }

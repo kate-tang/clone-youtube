@@ -119,16 +119,19 @@ export default {
         document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
         document.documentElement.style.setProperty('--sidebar-width', wideSidebarWidth)
         document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '100%')
+        document.documentElement.style.setProperty('--topicbar-left-offset', wideSidebarWidth)
       } else if (window.innerWidth > 800) {
         document.documentElement.style.setProperty('--narrow-sidebar-display', 'block')
         document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
         document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '0')
         document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform .2s')
+        document.documentElement.style.setProperty('--topicbar-left-offset', narrowSidebarWidth)
       } else if (window.innerWidth > 500) {
         document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
         document.documentElement.style.setProperty('--sidebar-width', 0)
         document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '0')
         document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform .2s')
+        document.documentElement.style.setProperty('--topicbar-left-offset', '0px')
       }
     }
     const showNarrowHideWide = () => {
@@ -142,16 +145,19 @@ export default {
         document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
         document.documentElement.style.setProperty('--wide-sidebar-display', 'none')
         document.documentElement.style.setProperty('--wide-sidebar-transform-left', 0)
+        document.documentElement.style.setProperty('--topicbar-left-offset', narrowSidebarWidth)
       } else if (window.innerWidth > 850) {
         document.documentElement.style.setProperty('--narrow-sidebar-display', 'block')
         document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
         document.documentElement.style.setProperty('--wide-sidebar-display', 'block')
         document.documentElement.style.setProperty('--wide-sidebar-transform-left', wideSidebarWidth)
+        document.documentElement.style.setProperty('--topicbar-left-offset', narrowSidebarWidth)
       } else if (window.innerWidth > 500) {
         document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
         document.documentElement.style.setProperty('--sidebar-width', 0)
         document.documentElement.style.setProperty('--wide-sidebar-display', 'block')
         document.documentElement.style.setProperty('--wide-sidebar-transform-left', wideSidebarWidth)
+        document.documentElement.style.setProperty('--topicbar-left-offset', '0px')
       }
     }
     const switchSidebar = () => {

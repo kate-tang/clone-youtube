@@ -9,6 +9,7 @@
   box-sizing: border-box;
   @include flex-center;
   position: relative;
+  color: var(--text);
   cursor: pointer;
   .icon {
     width: var(--btn-icon-size);

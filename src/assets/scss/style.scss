@@ -10,7 +10,7 @@
 html, body {
   position: relative;
   width: 100%;
-  min-height: 110vh;
+  min-height: 150vh;
   overflow-x: hidden;
 }
 
@@ -33,7 +33,6 @@ html, body {
   flex-direction: column;
   width: var(--narrow-sidebar-width);
   height: calc(var(--narrow-sidebar-width) + 2px);
-  color: var(--narrow-sidebar-text);
   font-size: 12px;
   &.enabled {
     background: var(--narrow-sidebar-btn-enabled-bg);
@@ -56,7 +55,6 @@ html, body {
   width: var(--wide-sidebar-width);
   height: var(--btn-size);
   padding: 0 var(--btn-icon-size);
-  color: var(--narrow-sidebar-text);
   font-size: 14px;
   &.enabled {
     background: var(--wide-sidebar-btn-enabled-bg);
@@ -84,6 +82,19 @@ html, body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+}
+.btn-pill {
+  @include btn;
+  height: var(--btn-pill-height);
+  padding: 0 13px;
+  background: var(--btn-pill-bg);
+  border-radius: 500px;
+  font-size: 14px;
+  white-space: nowrap;
+  &.enabled {
+    background: var(--btn-pill-enabled-bg);
+    color: var(--btn-pill-enabled-text);
   }
 }
 

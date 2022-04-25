@@ -1,16 +1,21 @@
 <template>
-  <Header />
-  <!-- <img src="./assets/image/color.png" alt="" style="padding-top: 100px"> -->
-  <router-view/>
+  <div class="container" :class="{ 'load': !$store.state.ispageReady }">
+    <Header />
+    <NarrowSidebar />
+    <WideSidebar />
+    <router-view :key="$route.fullPath" />
+  </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
+import NarrowSidebar from './components/NarrowSidebar.vue'
+import WideSidebar from './components/WideSidebar.vue'
 
 export default {
-  components: { Header },
+  components: { Header, NarrowSidebar, WideSidebar },
   setup(){
-
+    return {}
   }
 }
 </script>
@@ -20,19 +25,5 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: var(--yellow);
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

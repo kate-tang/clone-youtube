@@ -4,6 +4,7 @@ export default createStore({
   state: {
     darkMode: 'l',
     designatedSidebarMode: null,
+    ispageReady: false,
   },
   getters: {
   },
@@ -22,6 +23,12 @@ export default createStore({
     },
     clearSidebarMode(state){
       state.designatedSidebarMode = null
+    },
+    setPageToReady(state){
+      state.ispageReady = true
+    },
+    setPageToNotReady(state){
+      state.ispageReady = false
     },
   },
   actions: {

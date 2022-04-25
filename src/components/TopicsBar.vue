@@ -16,6 +16,7 @@
 
 <script>
 import { onMounted, onUnmounted, ref } from 'vue'
+
 export default {
   setup(){
     const topics = ref(['全部', '遊戲', '合輯', '直播中', '園藝', '烹飪節目', '音樂', '手工藝', '烹飪', '視覺藝術', '最新上傳', '已觀看', '讓你耳目一新的影片'])
@@ -96,6 +97,7 @@ export default {
   border-top: 1px solid var(--topicbar-border);
   border-bottom: 1px solid var(--topicbar-border);
   overflow: hidden;
+  z-index: var(--topicbar-z-index);
 }
 .prev, .next {
   position: absolute;
@@ -148,6 +150,18 @@ export default {
   }
   &:last-child {
     padding-right: calc(var(--topicbar-height) - var(--btn-pill-height));
+  }
+}
+
+// when page is still loading
+.load {
+  .topics-bar {
+    pointer-events: none;
+    .prev,
+    .topics-list,
+    .next {
+      opacity: 0;
+    }
   }
 }
 </style>

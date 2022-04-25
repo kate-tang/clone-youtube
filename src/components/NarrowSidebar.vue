@@ -46,7 +46,6 @@ export default {
 <style scoped lang="scss">
 .narrow-sidebar {
   display: var(--narrow-sidebar-display);
-  flex: 0 0 var(--narrow-sidebar-width);
   position: fixed;
   top: var(--header-height);
   bottom: 0;
@@ -56,5 +55,15 @@ export default {
 }
 .sidebar-list {
   margin-top: 4px;
+}
+
+// when page is still loading
+.load {
+  .narrow-sidebar {
+    pointer-events: none;
+    .sidebar-list {
+      opacity: 0;
+    }
+  }
 }
 </style>

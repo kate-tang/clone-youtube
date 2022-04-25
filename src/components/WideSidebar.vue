@@ -220,12 +220,12 @@ export default {
 <style scoped lang="scss">
 .wide-sidebar {
   display: var(--wide-sidebar-display);
-  flex: 0 0 var(--wide-sidebar-width);
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: var(--wide-sidebar-backdrop-position-right);
+  background: var(--sidebar-bg);
   z-index: var(--wide-sidebar-z-index);
 }
 
@@ -300,5 +300,16 @@ export default {
   right: var(--wide-sidebar-backdrop-position-right);
   background: rgba(0,0,0,.3);
   z-index: -1;
+}
+
+// when page is still loading
+.load {
+  .wide-sidebar {
+    pointer-events: none;
+    .sidebar .body,
+    .backdrop {
+      opacity: 0;
+    }
+  }
 }
 </style>

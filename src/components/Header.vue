@@ -4,7 +4,7 @@
       <button type="button" class="btn-circle menu" id="toggleSidebar" @click="switchSidebar">
         <img :src="require(`../assets/image/svg/menu-${$store.state.darkMode}.svg`)" alt="menu icon" class="icon">
       </button>
-      <Logo />
+      <Logo class="youtube-logo" />
     </div>
     <div class="center">
       <button type="button" class="exit-search-mode-btn btn-circle" @click="isSearchBarExpanded = false">
@@ -146,7 +146,7 @@ export default {
         document.documentElement.style.setProperty('--wide-sidebar-display', 'none')
         document.documentElement.style.setProperty('--wide-sidebar-transform-left', 0)
         document.documentElement.style.setProperty('--topicbar-left-offset', narrowSidebarWidth)
-      } else if (window.innerWidth > 850) {
+      } else if (window.innerWidth > 800) {
         document.documentElement.style.setProperty('--narrow-sidebar-display', 'block')
         document.documentElement.style.setProperty('--sidebar-width', narrowSidebarWidth)
         document.documentElement.style.setProperty('--wide-sidebar-display', 'block')
@@ -424,6 +424,30 @@ export default {
   .img {
     border-radius: 50%;
     cursor: pointer;
+  }
+}
+
+// when page is still loading
+.load {
+  .header {
+    pointer-events: none;
+    .youtube-logo,
+    .search-btn .icon,
+    .record .icon {
+      opacity: 0;
+    }
+    .right {
+      .btn-circle, .avatar {
+        width: 32px;
+        height: 32px;
+        margin-right: 16px;
+        padding: 0;
+        background: var(--header-load-btn-bg);
+        .icon, .img {
+          opacity: 0;
+        }
+      }
+    }
   }
 }
 </style>

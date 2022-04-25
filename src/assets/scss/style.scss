@@ -10,8 +10,13 @@
 html, body {
   position: relative;
   width: 100%;
-  min-height: 150vh;
+  min-height: 100vh;
   overflow-x: hidden;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
 }
 
 .btn {

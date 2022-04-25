@@ -79,6 +79,9 @@ export default {
     }
 
     onMounted(() => {
+
+      store.commit('setPageToReady')
+
       // get topmost skeleton
       const skeleton = document.querySelector('.skeleton')
 

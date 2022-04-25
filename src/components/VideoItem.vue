@@ -78,8 +78,8 @@ export default {
   position: relative;
   max-width: var(--video-max-width);
   min-width: var(--video-min-width);
-  margin: 0 8px 40px 8px;
-  padding: 5px;
+  margin: 0 4px 34px 4px;
+  padding: 4px 4px 6px 4px;
   border-radius: 3px;
   &.active {
     @include btn-active;

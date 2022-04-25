@@ -225,7 +225,6 @@ export default {
   bottom: 0;
   left: 0;
   right: var(--wide-sidebar-backdrop-position-right);
-  background: var(--sidebar-bg);
   z-index: var(--wide-sidebar-z-index);
 }
 

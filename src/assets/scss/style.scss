@@ -101,6 +101,9 @@ a {
     background: var(--btn-pill-enabled-bg);
     color: var(--btn-pill-enabled-text);
   }
+  &:hover {
+    background: var(--btn-pill-hover-bg);
+  }
 }
 
 .bold {

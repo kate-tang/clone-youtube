@@ -76,20 +76,20 @@ export default {
 
     onMounted(() => {
 
-      store.commit('setPageToReady')
+      // store.commit('setPageToReady')
 
-      // // get topmost skeleton
-      // const skeleton = document.querySelector('.skeleton')
+      // get topmost skeleton
+      const skeleton = document.querySelector('.skeleton')
 
-      // // when topmost skeleton is scrolled into view, then get next batch of videos with Intersection Observer
-      // let options = {}
-      // let callback = (entry, observer) => {
-      //   if (!entry[0].isIntersecting || isFetching.value) return
+      // when topmost skeleton is scrolled into view, then get next batch of videos with Intersection Observer
+      let options = {}
+      let callback = (entry, observer) => {
+        if (!entry[0].isIntersecting || isFetching.value) return
   
-      //   getVideo()
-      // }
-      // let observer = new IntersectionObserver(callback, options);
-      // observer.observe(skeleton);
+        getVideo()
+      }
+      let observer = new IntersectionObserver(callback, options);
+      observer.observe(skeleton);
     })
     
     return { videos, skeletonVideoQty }

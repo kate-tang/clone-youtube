@@ -3,6 +3,7 @@
   --btn-icon-size: 24px;
   --header-height: 56px;
   --header-z-index: 5;
+  --scrollbar-width: 16px;
 
   --narrow-sidebar-width: 72px;
   --wide-sidebar-width: 240px;
@@ -22,6 +23,8 @@
   --topicbar-display: flex;
   --topicbar-position: 'static';
   --topicbar-z-index: calc(var(--header-z-index) - 2);
+
+  --bottomnav-display: none;
 
   --video-max-width: 360px;
   --video-min-width: 320px;
@@ -48,11 +51,23 @@
 
     --topicbar-left-offset: 0px;
   }
+  @media (max-width: 500px) {
+    --btn-icon-size: 20px;
+    --header-height: 40px;
+
+    --btn-pill-height: 24px;
+
+    --bottomnav-display: block;
+  }
 }
 
 // light/dark mode
 body {
   --text: #000;
+  --main-bg: #F9F9F9;
+  --border: #E5E5E5;
+  --scrollbar-track-bg: var(--main-bg);
+  --scrollbar-thumb: #606060;
 
   --header-bg: #FFF;
   --header-icon-nation-text: #7B7B7B;
@@ -76,15 +91,22 @@ body {
   --wide-sidebar-btn-active-bg: #C1C1C1;
   --wide-sidebar-btn-enabled-bg-and-hover-bg: #D9D9D9;
   --wide-sidebar-btn-enabled-bg-and-active-bg: #ACACAC;
+  .wide-sidebar {
+    --scrollbar-track-bg: var(--sidebar-bg);
+    --scrollbar-thumb: transparent;
+    .body:hover {
+      --scrollbar-thumb: #909090;
+    }
+  }
 
   --topicbar-bg: var(--header-bg);
-  --topicbar-border: #E5E5E5;
+  --topicbar-border: var(--border);
   --btn-pill-bg: #F2F2F2;
   --btn-pill-enabled-bg: #030303;
   --btn-pill-enabled-text: #FFF;
   --btn-pill-hover-bg: #E5E5E5;
 
-  --videogrid-bg: #F9F9F9;
+  --videogrid-bg: var(--main-bg);
   --videogrid-video-active-bg: #E0E0E0;
   --videogrid-video-primary-text: #000;
   --videogrid-video-secondary-text: #606060;
@@ -92,8 +114,19 @@ body {
   --videogrid-video-skeleton-secondary-bg: #E3E3E3;
   --videogrid-loader-bg: #606060;
 
+  --bottomnav-bg: var(--main-bg);
+
+  @media (max-width: 500px) {
+    --main-bg: var(--header-bg);
+
+    --topicbar-border: transparent;
+  }
+
   &.darkmode {
     --text: #FFF;
+    --main-bg: #181818;
+    --border: #373737;
+    --scrollbar-thumb: #AAA;
   
     --header-bg: #202020;
     --header-icon-nation-text: #9C9C9C;
@@ -118,20 +151,34 @@ body {
     --wide-sidebar-btn-active-bg: #606060;
     --wide-sidebar-btn-enabled-bg-and-hover-bg: #4C4C4C;
     --wide-sidebar-btn-enabled-bg-and-active-bg: #707070;
+    .wide-sidebar {
+      --scrollbar-track-bg: var(--sidebar-bg);
+      --scrollbar-thumb: transparent;
+      .body:hover {
+        --scrollbar-thumb: #717171;
+      }
+    }
   
     --topicbar-bg: var(--header-bg);
-    --topicbar-border: #373737;
+    --topicbar-border: var(--border);
     --btn-pill-bg: #373737;
     --btn-pill-enabled-bg: #FFF;
     --btn-pill-enabled-text: #000;
     --btn-pill-hover-bg: #4D4D4D;
 
-    --videogrid-bg: #181818;
     --videogrid-video-active-bg: #303030;
     --videogrid-video-primary-text: #FFF;
     --videogrid-video-secondary-text: #AAAAAA;
     --videogrid-video-skeleton-primary-bg: #252525;
     --videogrid-video-skeleton-secondary-bg: #292929;
     --videogrid-loader-bg: #AAA;
+
+    --bottomnav-bg: var(--main-bg);
+  
+    @media (max-width: 500px) {
+      --main-bg: var(--header-bg);
+  
+      --topicbar-border: transparent;
+    }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <a href="#" class="logo">
+  <router-link to="/" class="logo" @click.prevent>
     <img :src="require(`../assets/image/svg/youtube-${$store.state.darkMode}.svg`)" alt="youtube logo" class="icon">
-  </a>
+  </router-link>
 </template>
 
 <script>

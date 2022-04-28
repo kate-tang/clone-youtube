@@ -18,8 +18,16 @@ const router = createRouter({
   }
 })
 
-router.beforeEach(() => {
+router.beforeEach((to, from) => {
+  // set page to "not ready", and set to "ready" later on when the particular part of the page has finished loading
   store.commit('setPageToNotReady')
+
+  // set title of each page
+  if (to.meta.title){
+    document.title = `${to.meta.title} - ${process.env.VUE_APP_TITLE}`
+  } else {
+    document.title = process.env.VUE_APP_TITLE
+  }
 })
 
 export default router

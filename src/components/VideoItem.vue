@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/watch?v=${video.id.videoId}`" class="video" :class="{ 'active': isActive }" @mousedown="isActive = true" @mouseup="isActive = false" @click.prevent v-if="video">
+  <router-link to="/" class="video" @click.prevent v-if="video">
     <div class="thumbnail">
       <img :src="video.snippet.thumbnails.medium.url" alt="">
       <span class="live" v-if="video.duration === 'live'">
@@ -9,18 +9,18 @@
       <span class="duration" v-else>{{ video.duration }}</span>
     </div>
     <div class="details">
-      <router-link to="/" class="avatar">
-        <img :src="channelIconUrl" alt="">
+      <router-link to="/" class="avatar" @click.prevent>
+        <img :src="channelIconUrl" alt="channel icon">
       </router-link>
       <div class="info">
         <h3 class="title" :title="video.snippet.title">{{ video.snippet.title }}</h3>
-        <div class="channel">{{ video.snippet.channelTitle }}</div>
+        <router-link to="/" class="channel" @click.prevent>{{ video.snippet.channelTitle }}</router-link>
         <div class="data">
           <span class="view">觀看次數：{{ video.approxViewCount }}次</span>
           <span class="published-time">{{ publishedAt }}</span>
         </div>
       </div>
-      <button type="button" class="more btn-circle" @click.prevent>
+      <button type="button" class="more btn-circle" @click.prevent.stop>
         <img :src="require(`../assets/image/svg/dots-${$store.state.darkMode}.svg`)" alt="more" class="icon">
       </button>
     </div>
@@ -46,7 +46,6 @@ import { convertTimeToTimeAgo } from '../helpers'
 export default {
   props: ['video'],
   setup(props) {
-    const isActive = ref(false)
     const publishedAt = ref('')
     const channelIconUrl = ref('')
     const channelId = ref('')
@@ -66,13 +65,14 @@ export default {
       generateData()
     }
 
-    return { isActive, publishedAt, channelIconUrl, channelId }
+    return { publishedAt, channelIconUrl, channelId }
   },
 }
 </script>
 
 <style scoped lang="scss">
 .video {
+  @include btn-active;
   flex: 1 1;
   display: block;
   position: relative;
@@ -81,9 +81,6 @@ export default {
   margin: 0 4px 34px 4px;
   padding: 4px 4px 6px 4px;
   border-radius: 3px;
-  &.active {
-    @include btn-active;
-  }
   &:hover {
     .more {
       opacity: 1;
@@ -211,6 +208,7 @@ export default {
     }
   }
   .channel, .data {
+    display: block;
     color: var(--videogrid-video-secondary-text);
     font-size: 12px;
   }

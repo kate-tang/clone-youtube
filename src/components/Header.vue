@@ -72,41 +72,49 @@ export default {
 
     // switch sidebar
     // sidebar mode
-    //    L:        ~ 1331px; default wide (in flow), can switch to narrow (in flow)
-    //    M:  1330px ~ 801px; default narrow (in flow), can call wide (modal mode)
-    //    S:   880px ~ 501px; default close, can call wide (modal mode)
+    //    XL:        ~ 1331px; default wide (in flow), can switch to narrow (in flow)
+    //    L:  1330px ~ 801px; default narrow (in flow), can call wide (modal mode)
+    //    M:   880px ~ 501px; default close, can call wide (modal mode)
+    //    S:   500px ~      ; bottom nav
     let prevScreenWidth = null
     window.addEventListener('resize', () => {
       let currentScreenWidth = window.innerWidth
 
       // searchbar
-      // if searchbar is expanded in narrow screen, then close it if screen resize > 670
+      // if searchbar is expanded in narrow screen, then close it if screen resize to > 670
       if (currentScreenWidth > 670){
         isSearchBarExpanded.value = false
       }
 
       // sidebar
       // when screen width passes threshold, clear designatedSidebarMode in store
-      const threshold_LtoM = prevScreenWidth && prevScreenWidth > 1330 && currentScreenWidth <= 1330
-      const threshold_MtoL = prevScreenWidth && prevScreenWidth <= 1330 && currentScreenWidth > 1330
-      if (threshold_LtoM || threshold_MtoL){
+      const threshold_XLtoL = prevScreenWidth && prevScreenWidth > 1330 && currentScreenWidth <= 1330
+      const threshold_LtoXL = prevScreenWidth && prevScreenWidth <= 1330 && currentScreenWidth > 1330
+      const threshold_LtoM = prevScreenWidth && prevScreenWidth > 800 && currentScreenWidth <= 800
+      const threshold_MtoL = prevScreenWidth && prevScreenWidth <= 800 && currentScreenWidth > 800
+      const threshold_MtoS = prevScreenWidth && prevScreenWidth > 500 && currentScreenWidth <= 500
+      const threshold_StoM = prevScreenWidth && prevScreenWidth <= 500 && currentScreenWidth > 500
+      if (threshold_XLtoL || threshold_LtoXL || threshold_LtoM || threshold_MtoL || threshold_MtoS || threshold_StoM){
         store.commit('clearSidebarMode')
       }
-      // when screen width < 1330, add transition to wide sidebar
-      if (threshold_LtoM){
+      // when screen width < 1330, remove transition for toggling sidebar
+      if (threshold_XLtoL){
         document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform 0s')
       }
       // update prevScreenWidth
       prevScreenWidth = currentScreenWidth
       // switch to different sidebar mode according to screen width; skip this step if user has designate a specific mode
-      if (currentScreenWidth <= 1330 && store.state.designatedSidebarMode) return
-      if (currentScreenWidth <= 1330){
-        showNarrowHideWide()
-      }
       if (currentScreenWidth > 1330 && store.state.designatedSidebarMode) return
       if (currentScreenWidth > 1330){
         showWideHideNarrow()
+        return
       }
+      if (currentScreenWidth > 500 && store.state.designatedSidebarMode) return
+      if (currentScreenWidth > 500){
+        showNarrowHideWide()
+        return
+      }
+      showBottomNav()
     })
     const showWideHideNarrow = () => {
       let wideSidebarWidth = getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-width`).trim()
@@ -132,6 +140,10 @@ export default {
         document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '0')
         document.documentElement.style.setProperty('--wide-sidebar-transition', 'transform .2s')
         document.documentElement.style.setProperty('--topicbar-left-offset', '0px')
+      } else {
+        document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
+        document.documentElement.style.setProperty('--sidebar-width', 0)
+        document.documentElement.style.setProperty('--wide-sidebar-backdrop-position-right', '100%')
       }
     }
     const showNarrowHideWide = () => {
@@ -160,10 +172,13 @@ export default {
         document.documentElement.style.setProperty('--topicbar-left-offset', '0px')
       }
     }
+    const showBottomNav = () => {
+      document.documentElement.style.setProperty('--wide-sidebar-display', 'none')
+      document.documentElement.style.setProperty('--narrow-sidebar-display', 'none')
+    }
     const switchSidebar = () => {
       let wideSidebarDisplay = getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-display`).trim()
       let wideSidebarTransformLeft = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(`--wide-sidebar-transform-left`).trim())
-      console.log(wideSidebarDisplay, wideSidebarTransformLeft);
 
       if (window.innerWidth > 1330){
         if (wideSidebarDisplay === 'block'){
@@ -232,6 +247,9 @@ export default {
   @media (max-width: 670px) {
     padding: 0 8px;
   }
+  @media (max-width: 500px) {
+    padding: 0;
+  }
   &.search-mode {
     .center {
       position: absolute;
@@ -253,7 +271,7 @@ export default {
       display: none;
     }
     .exit-search-mode-btn {
-      display: block;
+      display: flex;
     }
   }
 }
@@ -314,6 +332,9 @@ export default {
         padding: 0 5px;
       }
     }
+    @media (max-width: 500px) {
+      outline: none;
+    }
   }
 }
 .search-icon {
@@ -347,7 +368,9 @@ export default {
   font-size: 16px;
   outline: none;
   @media (max-width: 500px) {
-    margin-left: 0;
+    height: 70%;
+    margin: auto 0;
+    font-size: 14px;
   }
 }
 .search-clear {
@@ -374,7 +397,7 @@ export default {
 .call-search-btn {
   display: none;
   @media (max-width: 670px) {
-    display: block;
+    display: flex;
   }
 }
 .exit-search-mode-btn {
@@ -424,6 +447,13 @@ export default {
   .img {
     border-radius: 50%;
     cursor: pointer;
+  }
+  @media (max-width: 500px) {
+    padding: 0;
+    .img {
+      width: var(--btn-icon-size);
+      height: var(--btn-icon-size);
+    }
   }
 }
 

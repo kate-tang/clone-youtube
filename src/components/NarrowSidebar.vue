@@ -3,34 +3,34 @@
     <nav>
       <ul class="sidebar-list">
         <li class="sidebar-list-item">
-          <a href="#" class="btn-square enabled">
+          <router-link to="/" class="btn-square enabled" @click.prevent>
             <img :src="require(`../assets/image/svg/home-${$store.state.darkMode}.svg`)" alt="home" class="icon">
             <span class="text">首頁</span>
-          </a>
+          </router-link>
         </li>
         <li class="sidebar-list-item">
-          <a href="#" class="btn-square">
-            <img :src="require(`../assets/image/svg/explore-${$store.state.darkMode}.svg`)" alt="home" class="icon">
+          <router-link to="/" class="btn-square" @click.prevent>
+            <img :src="require(`../assets/image/svg/explore-${$store.state.darkMode}.svg`)" alt="explore" class="icon">
             <span class="text">探索</span>
-          </a>
+          </router-link>
         </li>
         <li class="sidebar-list-item">
-          <a href="#" class="btn-square">
-            <img :src="require(`../assets/image/svg/shorts-${$store.state.darkMode}.svg`)" alt="home" class="icon">
+          <router-link to="/" class="btn-square" @click.prevent>
+            <img :src="require(`../assets/image/svg/shorts-${$store.state.darkMode}.svg`)" alt="shorts" class="icon">
             <span class="text">Shorts</span>
-          </a>
+          </router-link>
         </li>
         <li class="sidebar-list-item">
-          <a href="#" class="btn-square">
-            <img :src="require(`../assets/image/svg/subscriptions-${$store.state.darkMode}.svg`)" alt="home" class="icon">
+          <router-link to="/" class="btn-square" @click.prevent>
+            <img :src="require(`../assets/image/svg/subscriptions-${$store.state.darkMode}.svg`)" alt="subscriptions" class="icon">
             <span class="text">訂閱內容</span>
-          </a>
+          </router-link>
         </li>
         <li class="sidebar-list-item">
-          <a href="#" class="btn-square">
-            <img :src="require(`../assets/image/svg/library-${$store.state.darkMode}.svg`)" alt="home" class="icon">
+          <router-link to="/" class="btn-square" @click.prevent>
+            <img :src="require(`../assets/image/svg/library-${$store.state.darkMode}.svg`)" alt="library" class="icon">
             <span class="text">媒體庫</span>
-          </a>
+          </router-link>
         </li>
       </ul>
     </nav>

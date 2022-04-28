@@ -3,6 +3,7 @@
     <Header />
     <NarrowSidebar />
     <WideSidebar />
+    <BottomNav />
     <router-view :key="$route.fullPath" />
   </div>
 </template>
@@ -11,10 +12,19 @@
 import Header from './components/Header.vue'
 import NarrowSidebar from './components/NarrowSidebar.vue'
 import WideSidebar from './components/WideSidebar.vue'
+import BottomNav from './components/BottomNav.vue'
+import { onMounted } from 'vue'
 
 export default {
-  components: { Header, NarrowSidebar, WideSidebar },
+  components: { Header, NarrowSidebar, WideSidebar, BottomNav },
   setup(){
+    onMounted(() => {
+      // custom scrollbar
+      document.body.classList.add('scrollbar')
+      // add this line so that light/dark mode style can be apply to scrollbar; it doesn't matter what style is added here; don't know why but it works...
+      document.styleSheets[0].insertRule('::-webkit-scrollbar { margin: 0 }')
+    })
+
     return {}
   }
 }

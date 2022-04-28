@@ -100,9 +100,46 @@ a {
   &.enabled {
     background: var(--btn-pill-enabled-bg);
     color: var(--btn-pill-enabled-text);
+    &:hover {
+      background: var(--btn-pill-enabled-bg);
+    }
   }
   &:hover {
     background: var(--btn-pill-hover-bg);
+  }
+  @media (max-width: 500px) {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+}
+.btn-bottomnav {
+  @include btn;
+  @include btn-active;
+  &::before {
+    top: 0;
+    bottom: 0;
+    height: calc(20vw);
+    margin: auto 0;
+    border-radius: 50%;
+    z-index: -1;
+  }
+  &:active {
+    background: transparent;
+    &::before {
+      background: var(--btn-active-bg);
+    }
+  }
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include flex-center;
+  flex-direction: column;
+  .icon {}
+  .text {
+    font-size: 12px;
+    transform: scale(0.7);
   }
 }
 

@@ -25,16 +25,12 @@ export default {
     const videos = ref([])
     const num = ref(50)
     const isFetching = ref(false)
-    const skeletonVideoQty = computed(()=> {
-      // return store.state.ispageReady ? 12 : 24
-      return 12
-    })
+    const skeletonVideoQty = ref(12)
 
     const getVideo = async () => {
       isFetching.value = true
       let tempVideos
       const keywords = randomWords(100).join('|')
-      console.log(keywords);
 
       // get random vidoes
       const searchApiRes = await fetch(`${process.env.VUE_APP_YOUTUBE_API}/search?part=snippet&regionCode=TW&relevanceLanguage=zh-Hant&location=23.797971,121.016547&locationRadius=220km&maxResults=${num.value}&type=video&q=${keywords}&key=${process.env.VUE_APP_YOUTUBE_API_KEY}`)
@@ -45,7 +41,7 @@ export default {
       const videoIds = searchApiData.items.map(video => video.id.videoId).toString()
       const videosApiRes = await fetch(`${process.env.VUE_APP_YOUTUBE_API}/videos?id=${videoIds}&part=contentDetails,statistics&key=${process.env.VUE_APP_YOUTUBE_API_KEY}`)
       const videosApiData = await videosApiRes.json()
-      console.log(searchApiData.items, videosApiData.items);
+      // console.log(searchApiData.items, videosApiData.items);
 
       tempVideos = tempVideos.map((video, index) => {
         const duration = convertISO8601ToHMS(videosApiData.items[index].contentDetails.duration)
@@ -58,7 +54,7 @@ export default {
         }
         return video
       });
-      console.log(tempVideos);
+      // console.log(tempVideos);
       videos.value = videos.value.concat(tempVideos)
 
       isFetching.value = false
@@ -73,7 +69,7 @@ export default {
           getVideo()
         } else {
           store.commit('setPageToReady')
-          console.log('home page ready');
+          // console.log('home page ready');
         }
       })
     }
@@ -82,19 +78,18 @@ export default {
 
       store.commit('setPageToReady')
 
-      // get topmost skeleton
-      const skeleton = document.querySelector('.skeleton')
+      // // get topmost skeleton
+      // const skeleton = document.querySelector('.skeleton')
 
-      // when topmost skeleton is scrolled into view, then get next batch of videos with Intersection Observer
-      let options = {}
-      let callback = (entry, observer) => {
-        console.log('in intersection observer', entry[0].isIntersecting, entry);
-        if (!entry[0].isIntersecting || isFetching.value) return
+      // // when topmost skeleton is scrolled into view, then get next batch of videos with Intersection Observer
+      // let options = {}
+      // let callback = (entry, observer) => {
+      //   if (!entry[0].isIntersecting || isFetching.value) return
   
-        getVideo()
-      }
-      let observer = new IntersectionObserver(callback, options);
-      observer.observe(skeleton);
+      //   getVideo()
+      // }
+      // let observer = new IntersectionObserver(callback, options);
+      // observer.observe(skeleton);
     })
     
     return { videos, skeletonVideoQty }

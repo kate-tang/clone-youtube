@@ -7,73 +7,73 @@
         </button>
         <Logo />
       </div>
-      <div class="body">
+      <div class="body scrollbar">
         <nav class="nav">
           <div class="block">
             <ul>
               <li>
-                <a href="#" class="btn-rectangle enabled">
+                <router-link to="/" class="btn-rectangle enabled" @click.prevent>
                   <img :src="require(`../assets/image/svg/home-${$store.state.darkMode}.svg`)" alt="home" class="icon">
                   <span class="text">首頁</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/explore-${$store.state.darkMode}.svg`)" alt="explore" class="icon">
                   <span class="text">探索</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/shorts-${$store.state.darkMode}.svg`)" alt="shorts" class="icon">
                   <span class="text">Shorts</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/subscriptions-${$store.state.darkMode}.svg`)" alt="subscriptions" class="icon">
                   <span class="text">訂閱內容</span>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
           <div class="block">
             <ul>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/library-${$store.state.darkMode}.svg`)" alt="library" class="icon">
                   <span class="text">媒體庫</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/history-${$store.state.darkMode}.svg`)" alt="history" class="icon">
                   <span class="text">觀看記錄</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/studio-${$store.state.darkMode}.svg`)" alt="studio" class="icon">
                   <span class="text">你的影片</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/watchlater-${$store.state.darkMode}.svg`)" alt="watchlater" class="icon">
                   <span class="text">稍後觀看</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/like-${$store.state.darkMode}.svg`)" alt="like" class="icon">
                   <span class="text">喜歡的影片</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <button type="button" class="btn-rectangle">
                   <img :src="require(`../assets/image/svg/chevron-down-${$store.state.darkMode}.svg`)" alt="chevron-down" class="icon">
                   <span class="text">顯示更多</span>
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -81,99 +81,99 @@
             <span class="title">訂閱內容</span>
             <ul>
               <li v-for="(channel, index) in subscribedChannels" :key="channel.id" v-show="index < 7 || showAllSubscribedChannels">
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="channel.image" alt="channel thumbnail" class="icon">
                   <span class="text">{{ channel.name }}</span>
-                </a>
+                </router-link>
               </li>
             </ul>
-            <a href="#" class="btn-rectangle" @click="showAllSubscribedChannels = !showAllSubscribedChannels">
+            <button type="button" class="btn-rectangle" @click="showAllSubscribedChannels = !showAllSubscribedChannels">
               <img :src="require(`../assets/image/svg/chevron-down-${$store.state.darkMode}.svg`)" alt="chevron-down" class="icon" v-if="!showAllSubscribedChannels">
               <span class="text" v-if="!showAllSubscribedChannels">顯示另外 {{ subscribedChannels.length - 7 }} 個項目</span>
               <img :src="require(`../assets/image/svg/chevron-up-${$store.state.darkMode}.svg`)" alt="chevron-down" class="icon" v-if="showAllSubscribedChannels">
               <span class="text" v-if="showAllSubscribedChannels">顯示較少</span>
-            </a>
+            </button>
           </div>
           <div class="block">
             <span class="title">更多 <span class="bold">YOUTUBE</span> 功能</span>
             <ul>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/premium-${$store.state.darkMode}.svg`)" alt="YouTube premium" class="icon">
                   <span class="text">YouTube Premium</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/movie-${$store.state.darkMode}.svg`)" alt="movie" class="icon">
                   <span class="text">電影</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/gaming-${$store.state.darkMode}.svg`)" alt="gaming" class="icon">
                   <span class="text">遊戲</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/live-${$store.state.darkMode}.svg`)" alt="live" class="icon">
                   <span class="text">直播</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/sport-${$store.state.darkMode}.svg`)" alt="sport" class="icon">
                   <span class="text">體育</span>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
           <div class="block">
             <ul>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/settings-${$store.state.darkMode}.svg`)" alt="settings" class="icon">
                   <span class="text">設定</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/reporthistory-${$store.state.darkMode}.svg`)" alt="reporthistory" class="icon">
                   <span class="text">檢舉記錄</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/question-${$store.state.darkMode}.svg`)" alt="question" class="icon">
                   <span class="text">說明</span>
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" class="btn-rectangle">
+                <router-link to="/" class="btn-rectangle" @click.prevent>
                   <img :src="require(`../assets/image/svg/comment-${$store.state.darkMode}.svg`)" alt="comment" class="icon">
                   <span class="text">提供意見</span>
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
         </nav>
         <footer class="footer">
           <ul class="links">
-            <li><a href="#">簡介</a></li>
-            <li><a href="#">媒體</a></li>
-            <li><a href="#">版權</a></li>
-            <li><a href="#">與我們聯絡</a></li>
-            <li><a href="#">創作者</a></li>
-            <li><a href="#">廣告</a></li>
-            <li><a href="#">開發人員</a></li>
+            <li><router-link to="/" @click.prevent>簡介</router-link></li>
+            <li><router-link to="/" @click.prevent>媒體</router-link></li>
+            <li><router-link to="/" @click.prevent>版權</router-link></li>
+            <li><router-link to="/" @click.prevent>與我們聯絡</router-link></li>
+            <li><router-link to="/" @click.prevent>創作者</router-link></li>
+            <li><router-link to="/" @click.prevent>廣告</router-link></li>
+            <li><router-link to="/" @click.prevent>開發人員</router-link></li>
           </ul>
           <ul class="links">
-            <li><a href="#">條款</a></li>
-            <li><a href="#">隱私權</a></li>
-            <li><a href="#">政策與安全性</a></li>
-            <li><a href="#">YouTube 運作方式</a></li>
-            <li><a href="#">測試新功能</a></li>
+            <li><router-link to="/" @click.prevent>條款</router-link></li>
+            <li><router-link to="/" @click.prevent>隱私權</router-link></li>
+            <li><router-link to="/" @click.prevent>政策與安全性</router-link></li>
+            <li><router-link to="/" @click.prevent>YouTube 運作方式</router-link></li>
+            <li><router-link to="/" @click.prevent>測試新功能</router-link></li>
           </ul>
           <div class="copyright">© 2022 Google LLC</div>
         </footer>
@@ -249,6 +249,7 @@ export default {
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
+  &:hover {}
 }
 .block {
   padding: 12px 0;
